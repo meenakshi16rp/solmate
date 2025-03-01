@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color:rgb(249, 223, 174); /* Light gray background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333; /* Dark gray text */
+        }
+
+        .container {
+            background:white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            margin: 20px;
+        }
+        h1 {
+            color: #19557d; /* Blue heading */
+            font-size: 45px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2E86C1; /* Blue subheading */
+            font-size: 28px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px 0;
+            font-size: 18px;
+        }
+
+        strong {
+            color: #333; /* Dark gray for strong text */
+        }
+
+        .graph {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .graph img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            li {
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 50px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            li {
+                font-size: 14px;
+            }
+        }
+        .cost-analysis-container {
+    display: inline-flex;  /* Ensures text and icon align properly */
+    align-items: center;   /* Centers icon with text */
+    gap: 6px;  /* Adds space between text and icon */
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ee5a5a;
+    margin: 0;
+}
+
+.info-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: -40px; /* Moves tooltip above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Show tooltip on hover */
+.info-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ROOFTOP SOLAR FINANCIAL REPORT</h1>
+        <br>
+        <br>
+        <h2>System Specifications</h2>
+    
+            <li><strong>Installed Capacity:</strong> {{ installed_kw|round(2) }} kW</li>
+            <li><strong>Daily Electricity Generation:</strong> {{ daily_generation|round(2) }} kWh</li>
+            <li><strong>Annual Electricity Generation:</strong> {{ annual_generation|round(2) }} kWh</li>
+            <li><strong>Required Panel Area:</strong> {{ required_panel_area|round(2) }} m²</li>
+            <li><strong>Available Panel Area (70% of Roof):</strong> {{ available_area|round(2) }} m²</li>
+            <li><strong>Percentage of Roof Used:</strong> {{ area_used_percentage|round(2) }}%</li>
+            <li><strong>Effective Sun Hours:</strong> {{ effective_sun_hours|round(2) }} kWh/kW/day</li>
+        
+        <div class="cost-analysis-container">
+            <h2>Cost Analysis</h2>
+            <div class="info-icon">𝙞
+                <span class="tooltip">Per KW  of equipment : <br>1.Solar panel = ₹25k-₹30k <br> 2.Invertor = ₹15k-₹20k <br> 3.Mounting structure = ₹5k-₹10k <br> 4.Wiring & electrical components = ₹2k-₹5k <br> 5.Installations & labour = ₹5k-₹10k       </span>
+            </div>
+        </div>
+                   <li><strong>Total Installation Cost:</strong> Rs. {{ total_cost|round(2)|intcomma }}</li>
+            <li><strong>Government Subsidy:</strong> Rs. {{ subsidy|round(2)|intcomma }}</li>
+            <li><strong>Total Cost after Subsidy:</strong> Rs. {{ total_cost_after_subsidy|round(2)|intcomma }}</li>
+        
+        <br>
+        <h2>Savings and Profit (Annual)</h2>
+       
+            <li><strong>Annual Savings:</strong> Rs. {{ annual_savings|round(2)|intcomma }}</li>
+            <li><strong>Grid Offloading Profit (if applicable):</strong> Rs. {{ grid_profit|round(2)|intcomma }}</li>
+        
+        <div class="graph">
+            <h2>Electricity Generation Graph (Monthly)</h2>
+            <img src="data:image/png;base64,{{ generation_graph }}" alt="Monthly Generation Graph"/>
+        </div>
+        <div class="graph">
+            <h2>ROI Graph (Cumulative Savings Over Years)</h2>
+            <img src="data:image/png;base64,{{ roi_graph }}" alt="ROI Graph"/>
+        </div>
+        <H3>*All figures are subject to 10% changed based on future household consumption.</H3>
+    </div>
+</body>
+</html>
